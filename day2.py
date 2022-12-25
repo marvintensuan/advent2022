@@ -1,7 +1,7 @@
 
 from typing import Literal, cast
 
-InputStr = Literal["A", "B", "C", "X", "Y", "Z" ]
+InputStr = str | Literal["A", "B", "C", "X", "Y", "Z" ]
 TurnNames = Literal["rock", "paper", "scissors"]
 ValidTurns = Literal["win", "lose", "draw"]
 
@@ -44,15 +44,13 @@ def calculate_score(move: TurnNames, result: ValidTurns) -> int:
     return points[move] + scores[result]
 
 with open('inputs/day02_part1.txt') as f:
-    data = [ turn.split(" ") for turn in f.read().splitlines()]
-    y = cast(list[list[InputStr]], data)
-    reveal_type(data)
+    data: list[list[str]] = [ turn.split(" ") for turn in f.read().splitlines()]
     # data = [
     #     ["A", "Y"],
     #     ["B", "X"]
     # ]
 
-def part1(data) -> int:
+def part1(data: list[list[InputStr]]) -> int:
     result = [
         calculate_score(mapping[you], battle(you, opponent))
         for opponent, you in data
