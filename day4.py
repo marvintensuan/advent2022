@@ -2,6 +2,7 @@ PairOfFrozenset = tuple[frozenset, frozenset]
 
 
 def create_ranges(txt: str) -> tuple[range, range]:
+    """Transforms string 'A-B,X-Y' into a 2-tuple of ranges (range(A, B+1), range(X, Y+1))."""
     a, b = txt.split(",")
     lower1, upper1 = [*map(int, a.split("-"))]
     lower2, upper2 = [*map(int, b.split("-"))]
@@ -9,12 +10,15 @@ def create_ranges(txt: str) -> tuple[range, range]:
 
 
 def modify_data(data: list[str]) -> list[PairOfFrozenset]:
+    """Transforms a list of string 'A-B,X-Y' into a list of type PairOfFrozenSet."""
     as_ranges = [create_ranges(item) for item in data]
     frozendata = [(frozenset(a), frozenset(b)) for (a, b) in as_ranges]
     return frozendata
 
 
 def fully_contain(first: frozenset, second: frozenset) -> bool:
+    """Returns True if all elements of frozenset `first` are in frozenset `second`.
+    Otherwise, returns False."""
     drop = first ^ second
     as_set = set(first)
     for item in drop:
@@ -39,7 +43,6 @@ with open("inputs/day04_part1.txt") as f:
 
 def part1(data: list[PairOfFrozenset]) -> int:
     x = [any([fully_contain(a, b), fully_contain(b, a)]) for a, b in data]
-
     return sum(x)
 
 
