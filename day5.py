@@ -19,9 +19,9 @@ def move(instr: str, data: TowerLike) -> None:
 def move_many_at_once(instr: str, data: TowerLike) -> None:
     n, src, dest = map(int, get_numeric.findall(instr))
 
-    q = [data[src].pop() for _ in range(n)]
-    q.reverse()
-    data[dest] += q
+    _new_src, _append_dest = data[src][: len(data[src]) - n], data[src][-n:]
+    data[src] = _new_src
+    data[dest] += _append_dest
 
 
 def solution(data: TowerLike, instructions: list[str], mover: Crane = move) -> str:
