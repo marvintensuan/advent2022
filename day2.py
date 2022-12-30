@@ -2,7 +2,7 @@ from typing import Literal
 
 InputStr = str | Literal["A", "B", "C", "X", "Y", "Z"]
 TurnNames = Literal["rock", "paper", "scissors"]
-ValidTurns = Literal["win", "lose", "draw"]
+ValidResults = Literal["win", "lose", "draw"]
 
 mapping: dict[InputStr, TurnNames] = {
     "A": "rock",
@@ -13,27 +13,27 @@ mapping: dict[InputStr, TurnNames] = {
     "Z": "scissors",
 }
 
-scores: dict[ValidTurns, int] = {"win": 6, "lose": 0, "draw": 3}
+scores: dict[ValidResults, int] = {"win": 6, "lose": 0, "draw": 3}
 
 points = {"rock": 1, "paper": 2, "scissors": 3}
 
 
-def battle(x: InputStr, y: InputStr) -> ValidTurns:
+rules: list[list[ValidResults]] = [
+    # Rock - Paper - Scissors
+    ["draw", "lose", "win"],  # Rock
+    ["win", "draw", "lose"],  # Paper
+    ["lose", "win", "draw"],  # Scissors
+]
+
+
+def battle(x: InputStr, y: InputStr) -> ValidResults:
     a = mapping[x]
     b = mapping[y]
-
-    if (a == "scissors") and (b == "rock"):
-        return "lose"
-    if (a == "rock") and (b == "scissors"):
-        return "win"
-    if a == b:
-        return "draw"
-    if points[a] > points[b]:
-        return "win"
-    return "lose"
+    turn = ("rock", "paper", "scissors")
+    return rules[turn.index(a)][turn.index(b)]
 
 
-def calculate_score(move: TurnNames, result: ValidTurns) -> int:
+def calculate_score(move: TurnNames, result: ValidResults) -> int:
     return points[move] + scores[result]
 
 
