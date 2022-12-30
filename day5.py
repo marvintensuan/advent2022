@@ -1,34 +1,27 @@
 from copy import deepcopy
 from itertools import compress
 import re
-from typing import Callable
+from typing import Callable, Concatenate
 
 TowerLike = dict[int, list[str]]
-Crane = Callable[[str, TowerLike], None]
+Crane = Callable[[str, TowerLike, bool], None]
 
 get_numeric = re.compile("\d+")
 
 
-def move(instr: str, data: TowerLike) -> None:
-    n, src, dest = map(int, get_numeric.findall(instr))
-    for _ in range(n):
-        item = data[src].pop()
-        data[dest].append(item)
-
-
-def move_many_at_once(instr: str, data: TowerLike) -> None:
+def move(instr: str, data: TowerLike, reverse=False) -> None:
     n, src, dest = map(int, get_numeric.findall(instr))
 
     _new_src, _append_dest = data[src][: len(data[src]) - n], data[src][-n:]
     data[src] = _new_src
-    data[dest] += _append_dest
+    data[dest] += _append_dest if reverse else _append_dest[::-1]
 
 
-def solution(data: TowerLike, instructions: list[str], mover: Crane = move) -> str:
+def solution(data: TowerLike, instructions: list[str], mover: Crane = move, reverse=True) -> str:
     _data = deepcopy(data)
 
     for instruction in instructions:
-        mover(instruction, _data)
+        mover(instruction, _data, reverse)
 
     return "".join([value.pop() for value in _data.values()])
 
@@ -57,7 +50,5 @@ if __name__ == "__main__":
         "move 1 from 1 to 2",
     ]
 
-    print(f"{solution(data, data_instr)=}")
-    print(f"{solution(sample_data, sample_instr)=}")
-    print(f"{solution(data, data_instr, mover=move_many_at_once)=}")
-    print(f"{solution(sample_data, sample_instr, mover=move_many_at_once)=}")
+    print(f"{solution(data, data_instr, reverse=True)=}")
+    print(f"{solution(data, data_instr, reverse=False)=}")
