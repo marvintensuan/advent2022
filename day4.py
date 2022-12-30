@@ -19,14 +19,7 @@ def modify_data(data: list[str]) -> list[PairOfFrozenset]:
 def fully_contain(first: frozenset, second: frozenset) -> bool:
     """Returns True if all elements of frozenset `first` are in frozenset `second`.
     Otherwise, returns False."""
-    drop = first ^ second
-    as_set = set(first)
-    for item in drop:
-        try:
-            as_set.remove(item)
-        except KeyError:
-            return False
-    return as_set == second
+    return all([item in second for item in first])
 
 
 def overlaps(first: frozenset, second: frozenset) -> bool:
