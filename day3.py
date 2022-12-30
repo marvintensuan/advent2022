@@ -22,16 +22,6 @@ def get_common_three(first: str, second: str, third: str) -> str:
     return common.pop()
 
 
-sample = [
-    "vJrwpWtwJgWrhcsFMMfFFhFp",
-    "jqHRNqRjqzjGDLGLrsFMfFZSrLrFZsSL",
-    "PmmdzqPrVvPwwTWBwg",
-    "wMqvLMZHhHMvwLHjbvcjnnSBnvTQFn",
-    "ttgJtRGJQctTZtZT",
-    "CrZsJsPPZsGzwwsLwLmpwMDw",
-]
-
-
 def part1(data: list[str]) -> int:
     splat = [split_half(item) for item in data]
     commons = [get_common(a, b) for a, b in splat]
@@ -46,8 +36,9 @@ def part2(data: list[str]) -> int:
     return sum(priorities)
 
 
-with open("inputs/day03_part1.txt") as f:
-    data = f.read().splitlines()
+if __name__ == '__main__':
+    with open("inputs/day03_part1.txt") as f:
+        data = f.read().splitlines()
 
-print(f"{part1(data)=:,}")
-print(f"{part2(data)=:,}")
+        print(f"{part1(data)=:,}")
+        print(f"{part2(data)=:,}")

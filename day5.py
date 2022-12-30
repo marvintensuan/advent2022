@@ -1,7 +1,7 @@
 from copy import deepcopy
 from itertools import compress
 import re
-from typing import Callable, Concatenate
+from typing import Callable
 
 TowerLike = dict[int, list[str]]
 Crane = Callable[[str, TowerLike, bool], None]
@@ -41,14 +41,6 @@ if __name__ == "__main__":
 
     data: TowerLike = {key: value for key, value in zip(range(1, 10), dv)}
 
-    sample_data = {1: ["Z", "N"], 2: ["M", "C", "D"], 3: ["P"]}
-
-    sample_instr = [
-        "move 1 from 2 to 1",
-        "move 3 from 1 to 3",
-        "move 2 from 2 to 1",
-        "move 1 from 1 to 2",
-    ]
 
     print(f"{solution(data, data_instr, reverse=True)=}")
     print(f"{solution(data, data_instr, reverse=False)=}")

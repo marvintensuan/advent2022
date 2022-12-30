@@ -33,14 +33,6 @@ def overlaps(first: frozenset, second: frozenset) -> bool:
     return len(first & second) > 0
 
 
-sample = ["2-4,6-8", "2-3,4-5", "5-7,7-9", "2-8,3-7", "6-6,4-6", "2-6,4-8"]
-frozensample = modify_data(sample)
-
-with open("inputs/day04_part1.txt") as f:
-    data = f.read().splitlines()
-    frozendata = modify_data(data)
-
-
 def part1(data: list[PairOfFrozenset]) -> int:
     x = [any([fully_contain(a, b), fully_contain(b, a)]) for a, b in data]
     return sum(x)
@@ -51,5 +43,11 @@ def part2(data: list[PairOfFrozenset]) -> int:
     return sum(x)
 
 
-print(f"{part1(frozendata)=:,}")
-print(f"{part2(frozendata)=:,}")
+if __name__ == '__main__':
+
+    with open("inputs/day04_part1.txt") as f:
+        data = f.read().splitlines()
+        frozendata = modify_data(data)
+
+    print(f"{part1(frozendata)=:,}")
+    print(f"{part2(frozendata)=:,}")
