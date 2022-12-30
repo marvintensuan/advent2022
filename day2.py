@@ -4,14 +4,6 @@ InputStr = str | Literal["A", "B", "C", "X", "Y", "Z"]
 TurnNames = Literal["rock", "paper", "scissors"]
 ValidResults = Literal["lose", "draw", "win"]
 
-mapping: dict[InputStr, TurnNames] = {
-    "A": "rock",
-    "X": "rock",
-    "B": "paper",
-    "Y": "paper",
-    "C": "scissors",
-    "Z": "scissors",
-}
 
 results: list[ValidResults] = ["lose", "draw", "win"]
 turn: list[TurnNames] = ["rock", "paper", "scissors"]
@@ -26,9 +18,7 @@ rules: list[list[ValidResults]] = [
 
 
 def battle(x: InputStr, y: InputStr) -> ValidResults:
-    a = mapping[x]
-    b = mapping[y]
-    return rules[turn.index(a)][turn.index(b)]
+    return rules["XYZ".index(x)]["ABC".index(y)]
 
 
 def calculate_score(move: TurnNames, result: ValidResults) -> int:
@@ -36,16 +26,29 @@ def calculate_score(move: TurnNames, result: ValidResults) -> int:
 
 
 def part1(data: list[list[InputStr]]) -> int:
-    result = [calculate_score(mapping[you], battle(you, opponent)) for opponent, you in data]
+    result = [
+        calculate_score(turn["XYZ".index(you)], battle(you, opponent)) for opponent, you in data
+    ]
     return sum(result)
+
+
+def part2(data: list[list[InputStr]]) -> int:
+
+    newmap = dict(zip("XYZ", results))
+
+    tally = []
+    for opp, you in data:
+        result = newmap[you]
+        your_turn = [item["ABC".index(opp)] for item in rules]
+        score = calculate_score(turn[your_turn.index(result)], result)
+        tally.append(score)
+
+    return sum(tally)
 
 
 if __name__ == "__main__":
     with open("inputs/day02_part1.txt") as f:
-        data: list[list[str]] = [turn.split(" ") for turn in f.read().splitlines()]
-        # data = [
-        #     ["A", "Y"],
-        #     ["B", "X"]
-        # ]
+        data: list[list[InputStr]] = [turn.split(" ") for turn in f.read().splitlines()]
 
     print(f"{part1(data)=:,}")
+    print(f"{part2(data)=:,}")
