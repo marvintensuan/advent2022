@@ -45,7 +45,9 @@ tree = generate_DiGraph(data)
 
 def part1(tree=tree) -> int:
     dir_map = nx.get_node_attributes(tree, "is_dir")
-    dir_sizes = [get_filesize_of(key) for key, value in dir_map.items() if value]
+    dir_sizes: list[int] = [
+        get_filesize_of(dir_name) for dir_name, is_dir in dir_map.items() if is_dir
+    ]
     return sum(filter(lambda x: x <= 100_000, dir_sizes))
 
 
@@ -61,8 +63,8 @@ def part2(tree=tree, total_space=70_000_000, space_required=30_000_000) -> int:
     dir_sizes = sorted(
         [
             size
-            for key, value in dir_map.items()
-            if value and (size := get_filesize_of(key)) >= to_delete
+            for dir_name, is_dir in dir_map.items()
+            if is_dir and (size := get_filesize_of(dir_name)) >= to_delete
         ]
     )
 
