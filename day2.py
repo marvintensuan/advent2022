@@ -33,12 +33,10 @@ def part1(data: list[list[InputStr]]) -> int:
 
 
 def part2(data: list[list[InputStr]]) -> int:
-
-    newmap = dict(zip("XYZ", results))
-
+    
     tally = []
     for opp, you in data:
-        result = newmap[you]
+        result = results["XYZ".index(you)]
         your_turn = [item["ABC".index(opp)] for item in rules]
         score = calculate_score(turn[your_turn.index(result)], result)
         tally.append(score)
