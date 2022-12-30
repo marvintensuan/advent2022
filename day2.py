@@ -2,7 +2,7 @@ from typing import Literal
 
 InputStr = str | Literal["A", "B", "C", "X", "Y", "Z"]
 TurnNames = Literal["rock", "paper", "scissors"]
-ValidResults = Literal["win", "lose", "draw"]
+ValidResults = Literal["lose", "draw", "win"]
 
 mapping: dict[InputStr, TurnNames] = {
     "A": "rock",
@@ -14,8 +14,7 @@ mapping: dict[InputStr, TurnNames] = {
 }
 
 results: list[ValidResults] = ["lose", "draw", "win"]
-
-points = {"rock": 1, "paper": 2, "scissors": 3}
+turn: list[TurnNames] = ["rock", "paper", "scissors"]
 
 
 rules: list[list[ValidResults]] = [
@@ -29,12 +28,11 @@ rules: list[list[ValidResults]] = [
 def battle(x: InputStr, y: InputStr) -> ValidResults:
     a = mapping[x]
     b = mapping[y]
-    turn = ("rock", "paper", "scissors")
     return rules[turn.index(a)][turn.index(b)]
 
 
 def calculate_score(move: TurnNames, result: ValidResults) -> int:
-    return points[move] + (results.index(result) * 3)
+    return (turn.index(move) + 1) + (results.index(result) * 3)
 
 
 def part1(data: list[list[InputStr]]) -> int:
