@@ -27,11 +27,6 @@ def generate_DiGraph(instructions: list[str]):
     return tree
 
 
-def is_leaf_dir(node_label, tree) -> int:
-    direct_children = [*tree[node_label]]
-    return not (any([tree.nodes[child]["is_dir"] for child in direct_children]))
-
-
 def get_filesize_of(node_label: str) -> int:
     return sum(
         [
