@@ -40,8 +40,8 @@ if __name__ == "__main__":
 
     data_instr = _data[10:]
 
-    compressor: list[bool] = [c.isdigit() for c in _data[8]]
-    compressed = [[*compress(element, compressor)] for element in _data[0:8]]
+    mask: list[bool] = [c.isdigit() for c in _data[8]]
+    compressed = [[*compress(element, mask)] for element in _data[0:8]]
     transposed = [*zip(*reversed(compressed))]
 
     dv = [[c for c in element if c.isalpha()] for element in transposed]
