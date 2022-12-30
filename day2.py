@@ -13,7 +13,7 @@ mapping: dict[InputStr, TurnNames] = {
     "Z": "scissors",
 }
 
-scores: dict[ValidResults, int] = {"win": 6, "lose": 0, "draw": 3}
+results: list[ValidResults] = ["lose", "draw", "win"]
 
 points = {"rock": 1, "paper": 2, "scissors": 3}
 
@@ -34,7 +34,7 @@ def battle(x: InputStr, y: InputStr) -> ValidResults:
 
 
 def calculate_score(move: TurnNames, result: ValidResults) -> int:
-    return points[move] + scores[result]
+    return points[move] + (results.index(result) * 3)
 
 
 def part1(data: list[list[InputStr]]) -> int:
