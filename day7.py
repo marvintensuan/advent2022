@@ -15,8 +15,7 @@ def generate_DiGraph(instructions: list[str]):
             continue
 
         desc, node = io.split(" ")
-        lbl = lambda x: f"{'/'.join(curr_path)}/{x}"
-        node = lbl(node)
+        node = f"{'/'.join(curr_path)}/{node}"
         tree.add_edge("/".join(curr_path), node)
 
         nx.set_node_attributes(tree, values={node: (desc == "dir")}, name="is_dir")
@@ -52,7 +51,8 @@ def part1(tree=tree) -> int:
 
 
 def part2(tree=tree, total_space=70_000_000, space_required=30_000_000) -> int:
-    """Given `total_space` and `space_required`, give the size of the directory which could be deleted to free up space."""
+    """Given `total_space` and `space_required`, 
+    give the size of the directory which could be deleted to free up space."""
 
     space_used_current = get_filesize_of("/")
     to_delete = space_required - (total_space - space_used_current)

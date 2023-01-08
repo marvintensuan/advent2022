@@ -1,6 +1,6 @@
+import re
 from copy import deepcopy
 from itertools import compress
-import re
 from typing import Callable
 
 TowerLike = dict[int, list[str]]
